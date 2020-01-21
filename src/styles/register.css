@@ -1,0 +1,33 @@
+.login-container {
+  display: flex;
+  padding-top: 4rem;
+  flex-direction: column;
+}
+
+.logo {
+  padding: 0 3rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.logo h1 {
+  width: 2rem;
+  display: inline-block;
+}
+.logo .icon {
+  width: 6rem;
+  height: 6rem;
+  position: relative;
+  top: 0.3rem;
+}
+
+.btn-wrap {
+  padding: 0 1rem;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.btn-wrap .btn-link {
+  margin-top: 1rem;
+  display: inline-block;
+  color: #007fff;
+}
