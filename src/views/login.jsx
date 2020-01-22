@@ -1,5 +1,5 @@
 import React from 'react'
-import axios from 'axios'
+import axios from '../utils/request'
 import { List, InputItem, Button, Toast } from 'antd-mobile'
 import { Link } from 'react-router-dom'
 import '../styles/register.css'
@@ -9,17 +9,13 @@ class Login extends React.Component {
     super()
     this.state = {}
   }
-  onLogin() {
+  async onLogin() {
     const { email, password } = this.state
-    axios
-      .post('http://localhost:3000/user/login', {
-        email,
-        password
-      })
-      .then(res => {
-        console.log(res)
-        Toast.success('login success', 1)
-      })
+    await axios.post('user/login', {
+      email,
+      password
+    })
+    Toast.success('登录成功', 2)
   }
   onChangeEmail(email) {
     this.setState({

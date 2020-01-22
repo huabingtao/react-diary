@@ -1,5 +1,5 @@
 import React from 'react'
-import axios from 'axios'
+import axios from '../utils/request'
 import { List, InputItem, Button, Toast } from 'antd-mobile'
 import { Link } from 'react-router-dom'
 import '../styles/register.css'
@@ -9,23 +9,14 @@ class Register extends React.Component {
     super()
     this.state = {}
   }
-  onRegister() {
+  async onRegister() {
     const { email, password1, password2 } = this.state
-    axios
-      .post('http://localhost:3000/user/register', {
-        email,
-        password1,
-        password2
-      })
-      .then(res => {
-        console.log(res)
-        Toast.success('Register Success', 2)
-      })
-      .catch(error => {
-        if (error.response) {
-          Toast.fail(error.response.data.message, 2)
-        }
-      })
+    await axios.post('user/register', {
+      email,
+      password1,
+      password2
+    })
+    Toast.success('Register Success', 2)
   }
   onChangeEamil(email) {
     this.setState({
