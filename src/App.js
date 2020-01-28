@@ -7,8 +7,19 @@ import {
 } from 'react-router-dom'
 import Login from './views/login'
 import Register from './views/register'
+import Index from './views/index'
+import WriteDiary from './views/write-diary'
+import DiaryDetail from './views/diary-detail'
 
 const routes = [
+  {
+    path: '/diaryDetail',
+    component: DiaryDetail
+  },
+  {
+    path: '/writeDiary',
+    component: WriteDiary
+  },
   {
     path: '/register',
     component: Register
@@ -18,7 +29,7 @@ const routes = [
     component: Login
   },
   {
-    path: '/index',
+    path: '/',
     component: Index
   },
   {
@@ -64,9 +75,9 @@ class App extends React.Component {
   }
 }
 
-function Index() {
-  return <h3>Index</h3>
-}
+// function Index() {
+//   return <h3>Index</h3>
+// }
 
 function NoMatch() {
   let location = useLocation()

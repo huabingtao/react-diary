@@ -1,11 +1,15 @@
 import React from 'react'
-import { Button, WhiteSpace, WingBlank } from 'antd-mobile'
+import { NavBar, Icon } from 'antd-mobile'
 
 class Header extends React.Component {
   render() {
     return (
       <div>
-        <Button type="primary">primary</Button>
+        <NavBar
+          mode="dark"
+          leftContent="Record Not"
+          rightContent={[<Icon key="1" type="ellipsis" />]}
+        ></NavBar>
       </div>
     )
   }
