@@ -26,6 +26,7 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   response => {
     // 接口请求成功处理
+    return response
   },
   error => {
     if (!error.response.status) {

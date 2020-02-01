@@ -2,7 +2,6 @@ import React from 'react'
 import { Tabs } from 'antd-mobile'
 import axios from '../utils/request'
 import Header from '../components/Header'
-import SearchBox from '../components/SearchBox'
 import RList from '../components/List'
 import AddButton from '../components/AddButton'
 import '../styles/register.css'
@@ -10,9 +9,27 @@ import '../styles/register.css'
 class Index extends React.Component {
   constructor() {
     super()
+    this.state = {
+      diars: []
+    }
   }
   onClickButton() {
     this.props.history.push('/writeDiary')
+  }
+  async getAllDiarys() {
+    // const user = JSON.parse(window.localStorage.getItem('user'))
+    const res = await axios.get('diary')
+    this.setState({
+      diars: res.data
+    })
+    console.log('res.data:', res.data)
+  }
+  onClickDiary(item) {
+    console.log(item)
+    this.props.history.push('/diaryDetail', { item })
+  }
+  componentDidMount() {
+    this.getAllDiarys()
   }
   render() {
     const style = {
@@ -32,17 +49,19 @@ class Index extends React.Component {
     ]
     return (
       <div className="index-container">
-        <Tabs
-          tabs={tabs2}
-          initialPage={1}
-          renderTab={tab => <span>{tab.title}</span>}
-        >
+        <Header></Header>
+        <Tabs tabs={tabs2} renderTab={tab => <span>{tab.title}</span>}>
           <div style={style.tabBox}>
-            <RList></RList>
+            {this.state.diars.length && (
+              <RList
+                list={this.state.diars}
+                onClickDiary={this.onClickDiary.bind(this)}
+              ></RList>
+            )}
           </div>
           <div>Content of second tab</div>
         </Tabs>
-        {/* <Header></Header> */}
+
         {/* <div style={styl.searchBox}>
           <SearchBox></SearchBox>
         </div> */}

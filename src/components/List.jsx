@@ -1,6 +1,16 @@
 import React from 'react'
 
 class List extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+  // onClickDiary(item) {
+  //   console.log(item)
+  //   console.log('this:', this)
+
+  //   this.props.history.push('/diaryDetail')
+  //   this.props.history.push('/index')
+  // }
   render() {
     const itemStyl = {
       wrap: {
@@ -32,16 +42,19 @@ class List extends React.Component {
     }
     return (
       <div style={itemStyl.wrap}>
-        <div style={itemStyl.item}>
-          <div style={itemStyl.title}>Title</div>
-          <div style={itemStyl.content}>这是内容</div>
-          <div style={itemStyl.favor}>2018年08月12号</div>
-        </div>
-        <div style={itemStyl.item}>
-          <div style={itemStyl.title}>Title</div>
-          <div style={itemStyl.content}>这是内容</div>
-          <div style={itemStyl.favor}>2018年08月12号</div>
-        </div>
+        {this.props.list.map(item => {
+          return (
+            <div
+              style={itemStyl.item}
+              key={item.id}
+              onClick={this.props.onClickDiary.bind(this, item)}
+            >
+              <div style={itemStyl.title}>{item.nickname}</div>
+              <div style={itemStyl.content}>{item.content}</div>
+              <div style={itemStyl.favor}>{item.create_time}</div>
+            </div>
+          )
+        })}
       </div>
     )
   }

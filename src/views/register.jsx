@@ -10,9 +10,10 @@ class Register extends React.Component {
     this.state = {}
   }
   async onRegister() {
-    const { email, password1, password2 } = this.state
+    const { email, nickname, password1, password2 } = this.state
     await axios.post('user/register', {
       email,
+      nickname,
       password1,
       password2
     })
@@ -21,6 +22,11 @@ class Register extends React.Component {
   onChangeEamil(email) {
     this.setState({
       email
+    })
+  }
+  onChangeNickname(nickname) {
+    this.setState({
+      nickname
     })
   }
   onChangePassword1(password1) {
@@ -51,6 +57,14 @@ class Register extends React.Component {
               onChange={this.onChangeEamil.bind(this)}
             >
               邮箱
+            </InputItem>
+            <InputItem
+              type="text"
+              placeholder="input your nickname"
+              clear={true}
+              onChange={this.onChangeNickname.bind(this)}
+            >
+              昵称
             </InputItem>
             <InputItem
               type="password"

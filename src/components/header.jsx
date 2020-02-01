@@ -7,7 +7,7 @@ class Header extends React.Component {
       <div>
         <NavBar
           mode="dark"
-          leftContent="Record Not"
+          leftContent="Diary"
           rightContent={[<Icon key="1" type="ellipsis" />]}
         ></NavBar>
       </div>

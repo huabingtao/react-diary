@@ -25,13 +25,16 @@ function Header(props) {
 }
 
 class DiaryDetail extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
   }
   onClickCancel() {
     this.props.history.push('/index')
   }
   render() {
+    // console.log(this.props.location.state.item, '111')
+
+    const diary = this.props.location.state.item
     const style = {
       pad: {
         padding: '0 1.2rem'
@@ -64,7 +67,7 @@ class DiaryDetail extends React.Component {
         <Header onClickCancel={this.onClickCancel.bind(this)}></Header>
         <div style={style.pad}>
           <div style={style.feature}>
-            <div>2020-01-23 21:23 周四</div>
+            <div>{diary.create_time}</div>
             <div style={style.ability}>
               <div style={style.abilityItem}>
                 <svg
@@ -88,7 +91,7 @@ class DiaryDetail extends React.Component {
               </div>
             </div>
           </div>
-          <div>代扣代缴上课了的肯定塑料袋咖啡机SDK大飞机</div>
+          <div>{diary.content}</div>
         </div>
       </div>
     )
