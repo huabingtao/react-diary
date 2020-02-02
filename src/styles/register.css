@@ -12,6 +12,9 @@
 .logo h1 {
   width: 2rem;
   display: inline-block;
+  margin: 0;
+  position: relative;
+  top: -1rem;
 }
 .logo .icon {
   width: 6rem;

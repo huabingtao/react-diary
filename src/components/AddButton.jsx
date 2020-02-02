@@ -11,7 +11,7 @@ class Header extends React.Component {
         boxShadow: 'rgba(0, 0, 0,0.2) 0 0.1rem 0.3rem 0.2rem',
         fontSize: '1rem',
         color: '#000',
-        display: ''
+        background: '#fff'
       },
       image: {
         marginLeft: '10%',

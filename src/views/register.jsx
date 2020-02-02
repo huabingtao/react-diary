@@ -46,7 +46,7 @@ class Register extends React.Component {
           <svg className="icon svg-icon" aria-hidden="true">
             <use href="#icon-bianjilan" />
           </svg>
-          <h1>随手记</h1>
+          <h1>随笔</h1>
         </div>
         <div className="input">
           <List>

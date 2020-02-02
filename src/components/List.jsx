@@ -1,6 +1,12 @@
 import React from 'react'
 
 class List extends React.Component {
+  filterContent(content) {
+    if (content.length < 50) {
+      return content
+    }
+    return content.toString().substr(0, 65) + '...'
+  }
   render() {
     const itemStyl = {
       wrap: {
@@ -64,7 +70,9 @@ class List extends React.Component {
               onClick={this.props.onClickDiary.bind(this, item)}
             >
               <div style={itemStyl.title}>{item.nickname}</div>
-              <div style={itemStyl.content}>{item.content}</div>
+              <div style={itemStyl.content}>
+                {this.filterContent(item.content)}
+              </div>
               <div style={itemStyl.favor}>{item.create_time}</div>
             </div>
           )
