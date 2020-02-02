@@ -25,15 +25,13 @@ function Header(props) {
 }
 
 class DiaryDetail extends React.Component {
-  constructor(props) {
-    super(props)
-  }
+  // constructor(props) {
+  //   super(props)
+  // }
   onClickCancel() {
     this.props.history.push('/index')
   }
   render() {
-    // console.log(this.props.location.state.item, '111')
-
     const diary = this.props.location.state.item
     const style = {
       pad: {

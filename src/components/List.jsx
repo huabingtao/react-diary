@@ -1,16 +1,6 @@
 import React from 'react'
 
 class List extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-  // onClickDiary(item) {
-  //   console.log(item)
-  //   console.log('this:', this)
-
-  //   this.props.history.push('/diaryDetail')
-  //   this.props.history.push('/index')
-  // }
   render() {
     const itemStyl = {
       wrap: {

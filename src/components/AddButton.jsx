@@ -21,7 +21,7 @@ class Header extends React.Component {
 
     return (
       <div style={stylAddButton.wrap} onClick={this.props.onClickButton}>
-        <img src={upload} width="80%" style={stylAddButton.image} />
+        <img src={upload} width="80%" alt="" style={stylAddButton.image} />
       </div>
     )
   }

@@ -2,11 +2,10 @@ import React from 'react'
 import { Popover, NavBar, Icon } from 'antd-mobile'
 const outPng = require('../images/out.png')
 const Item = Popover.Item
-const myImg = src => <img src={`${outPng}`} className="am-icon am-icon-xs" />
+const myImg = src => (
+  <img src={`${outPng}`} alt="" className="am-icon am-icon-xs" />
+)
 class Header extends React.Component {
-  constructor(props) {
-    super(props)
-  }
   state = {
     visible: false,
     selected: ''
