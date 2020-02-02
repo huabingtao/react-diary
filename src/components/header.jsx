@@ -29,7 +29,7 @@ class Header extends React.Component {
     return (
       <div>
         <NavBar
-          mode="light"
+          style={{ backgroundColor: '#56b783' }}
           rightContent={
             <Popover
               mask
@@ -67,7 +67,7 @@ class Header extends React.Component {
             </Popover>
           }
         >
-          Diary
+          日记
         </NavBar>
       </div>
     )
