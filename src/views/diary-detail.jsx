@@ -1,4 +1,7 @@
 import React from 'react'
+import { Modal, Toast } from 'antd-mobile'
+import axios from '../utils/request'
+const alert = Modal.alert
 
 function Header(props) {
   const style = {
@@ -26,17 +29,16 @@ function Header(props) {
       color: '#fff'
     }
   }
-
   return (
     <div style={style.wrap}>
-      <span onClick={props.onClickCancel}>返回</span>
+      <span onClick={props.onClickGoback}>返回</span>
       <div style={style.feature}>
-        <div>
+        <div onClick={props.onClickDelete}>
           <svg className="icon svg-icon" style={style.icon} aria-hidden="true">
             <use href="#icon-shanchu" />
           </svg>
         </div>
-        <div>
+        <div onClick={props.onClickModify}>
           <svg className="icon svg-icon" style={style.icon} aria-hidden="true">
             <use href="#icon-bianji" />
           </svg>
@@ -47,11 +49,53 @@ function Header(props) {
 }
 
 class DiaryDetail extends React.Component {
-  onClickCancel() {
-    this.props.history.push('/index')
+  constructor(props) {
+    super(props)
+    this.state = {
+      detail: {},
+      id: this.props.match.params.id
+    }
+  }
+  componentDidMount() {
+    this.getDiaryDetail()
+  }
+  async getDiaryDetail() {
+    const { id } = this.state
+    const res = await axios.get(`/diary/${id}`)
+    this.setState({
+      detail: res.data
+    })
+  }
+  onClickDelete() {
+    const { detail } = this.state
+    alert('警告⚠️', '确定要删除吗?', [
+      { text: '取消', onPress: () => console.log('cancel') },
+      {
+        text: '确定',
+        onPress: async () => {
+          await axios.delete('/diary/', {
+            data: {
+              uid: detail.uid,
+              id: detail.id
+            }
+          })
+          Toast.success('Delete Success', 1)
+          setTimeout(() => {
+            this.props.history.goBack()
+          }, 500)
+        }
+      }
+    ])
+  }
+  onClickModify() {
+    this.props.history.push('/writeDiary', {
+      diaryDetail: this.state.detail
+    })
+  }
+  onClickGoback() {
+    this.props.history.goBack()
   }
   render() {
-    const diary = this.props.location.state.item
     const style = {
       pad: {
         padding: '0 1.2rem',
@@ -83,10 +127,14 @@ class DiaryDetail extends React.Component {
 
     return (
       <div>
-        <Header onClickCancel={this.onClickCancel.bind(this)}></Header>
+        <Header
+          onClickGoback={this.onClickGoback.bind(this)}
+          onClickDelete={this.onClickDelete.bind(this)}
+          onClickModify={this.onClickModify.bind(this)}
+        ></Header>
         <div style={style.pad}>
           <div style={style.feature}>
-            <div>{diary.create_time}</div>
+            <div>{this.state.detail.create_time}</div>
             <div style={style.ability}>
               <div style={style.abilityItem}>
                 <svg
@@ -110,7 +158,7 @@ class DiaryDetail extends React.Component {
               </div>
             </div>
           </div>
-          <div>{diary.content}</div>
+          <div>{this.state.detail.content}</div>
         </div>
       </div>
     )

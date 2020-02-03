@@ -13,7 +13,7 @@ import DiaryDetail from './views/diary-detail'
 
 const routes = [
   {
-    path: '/diaryDetail',
+    path: '/diaryDetail/:id',
     component: DiaryDetail
   },
   {

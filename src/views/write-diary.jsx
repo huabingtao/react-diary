@@ -24,33 +24,59 @@ function Header(props) {
       <span onClick={props.onClickCancel} style={style.cancel}>
         取消
       </span>
-      <span onClick={props.onCLickConfirm}>发布</span>
+      <span onClick={props.onClickConfirm}>发布</span>
     </div>
   )
 }
 class WriteDiary extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      content: ''
+    }
+  }
   componentDidMount() {
     this.autoFocusInst.focus()
-  }
-  onClickCancel() {
-    this.props.history.push('/index')
-  }
-  async onCLickConfirm() {
-    // console.log('111', this.state.content)
-    const { content } = this.state
-    const user = JSON.parse(window.localStorage.getItem('user'))
-    await axios.post('/diary/', {
-      id: user.id,
+    if (!this.props.location.state) {
+      return
+    }
+    const { content, uid, id } = this.props.location.state.diaryDetail
+    this.setState({
+      uid,
+      id,
       content
     })
-    Toast.success('发布成功', 1.5, _ => {
-      this.props.history.push('/index')
-    })
+  }
+
+  async onClickConfirm() {
+    const { content, id, uid } = this.state
+    const user = JSON.parse(window.localStorage.getItem('user'))
+    if (id) {
+      await axios.put('/diary/', {
+        uid,
+        id,
+        content
+      })
+      Toast.success('编辑成功', 1.5, _ => {
+        this.props.history.goBack()
+      })
+    } else {
+      await axios.post('/diary/', {
+        id: user.id,
+        content
+      })
+      Toast.success('发布成功', 1.5, _ => {
+        this.props.history.goBack()
+      })
+    }
   }
   onChange(value) {
     this.setState({
       content: value
     })
+  }
+  onClickCancel() {
+    this.props.history.goBack()
   }
 
   render() {
@@ -58,10 +84,11 @@ class WriteDiary extends React.Component {
       <div>
         <Header
           onClickCancel={this.onClickCancel.bind(this)}
-          onCLickConfirm={this.onCLickConfirm.bind(this)}
+          onClickConfirm={this.onClickConfirm.bind(this)}
         ></Header>
         <TextareaItem
           rows="16"
+          value={this.state.content}
           placeholder="从前车马很慢书信很远一生只够爱一个人"
           ref={el => (this.autoFocusInst = el)}
           count="2000"

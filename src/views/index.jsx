@@ -48,7 +48,7 @@ class Index extends React.Component {
     })
   }
   onClickDiary(item) {
-    this.props.history.push('/diaryDetail', { item })
+    this.props.history.push(`diaryDetail/${item.id}`)
   }
   onTabClick(tab, index) {
     if (!this.isDidMyDiary && index === 1) {
