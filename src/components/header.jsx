@@ -67,7 +67,7 @@ class Header extends React.Component {
             </Popover>
           }
         >
-          随笔
+          吾记
         </NavBar>
       </div>
     )
