@@ -97,10 +97,15 @@ class DiaryDetail extends React.Component {
   }
   render() {
     const style = {
+      wrap: {
+        height: '100%',
+        background: '#d7ebdd'
+      },
       pad: {
         padding: '0 1.2rem',
         fontSize: '1.2rem',
-        lineHeight: '1.5rem'
+        lineHeight: '1.5rem',
+        maxHeight: '100%'
       },
       feature: {
         display: 'flex',
@@ -126,7 +131,7 @@ class DiaryDetail extends React.Component {
     }
 
     return (
-      <div>
+      <div style={style.wrap}>
         <Header
           onClickGoback={this.onClickGoback.bind(this)}
           onClickDelete={this.onClickDelete.bind(this)}

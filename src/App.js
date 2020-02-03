@@ -10,6 +10,7 @@ import Register from './views/register'
 import Index from './views/index'
 import WriteDiary from './views/write-diary'
 import DiaryDetail from './views/diary-detail'
+import './App.css'
 
 const routes = [
   {
@@ -54,8 +55,7 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-        <div>
-          {/* <ul>
+        {/* <ul>
             <li>
               <Link to="/login">login</Link>
             </li>
@@ -64,12 +64,11 @@ class App extends React.Component {
             </li>
           </ul> */}
 
-          <Switch>
-            {routes.map((route, i) => (
-              <RouteWithSubRoutes key={i} {...route} />
-            ))}
-          </Switch>
-        </div>
+        <Switch>
+          {routes.map((route, i) => (
+            <RouteWithSubRoutes key={i} {...route} />
+          ))}
+        </Switch>
       </Router>
     )
   }
