@@ -44,12 +44,14 @@ class Login extends React.Component {
           <List>
             <InputItem
               type="text"
+              clear={true}
               placeholder="input your email"
               onChange={this.onChangeEmail.bind(this)}
             >
               邮箱
             </InputItem>
             <InputItem
+              clear={true}
               type="password"
               placeholder="****"
               onChange={this.onChangePassword.bind(this)}

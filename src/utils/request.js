@@ -29,11 +29,12 @@ instance.interceptors.response.use(
     return response
   },
   error => {
-    if (!error.response.status) {
-      //   console.log('接口出错未返回状态码');
-      return
-    }
     // 提示给用户具体报错信息
+    let errObj = JSON.parse(JSON.stringify(error))
+    if (errObj.message === 'Network Error') {
+      Toast.fail('服务器异常请稍后再试', 2)
+      return Promise.reject()
+    }
     Toast.fail(error.response.data.message, 2)
     return Promise.reject(error)
   }

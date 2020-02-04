@@ -69,6 +69,7 @@ class Register extends React.Component {
             <InputItem
               type="password"
               placeholder="****"
+              clear={true}
               onChange={this.onChangePassword1.bind(this)}
             >
               密码
@@ -76,6 +77,7 @@ class Register extends React.Component {
             <InputItem
               type="password"
               placeholder="****"
+              clear={true}
               onChange={this.onChangePassword2.bind(this)}
             >
               再次输入
