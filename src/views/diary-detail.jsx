@@ -52,7 +52,7 @@ class DiaryDetail extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      detail: {},
+      detail: '',
       id: this.props.match.params.id
     }
   }
@@ -129,7 +129,7 @@ class DiaryDetail extends React.Component {
         padding: '0 0.5rem 0'
       }
     }
-
+    const detail = this.state.detail
     return (
       <div style={style.wrap}>
         <Header
@@ -137,34 +137,36 @@ class DiaryDetail extends React.Component {
           onClickDelete={this.onClickDelete.bind(this)}
           onClickModify={this.onClickModify.bind(this)}
         ></Header>
-        <div style={style.pad}>
-          <div style={style.feature}>
-            <div>{this.state.detail.create_time}</div>
-            <div style={style.ability}>
-              <div style={style.abilityItem}>
-                <svg
-                  className="icon svg-icon"
-                  style={style.abilityItemIconSvg}
-                  aria-hidden="true"
-                >
-                  <use href="#icon-xihuanhui" />
-                </svg>
-                <span>4</span>
-              </div>
-              <div style={style.abilityItem}>
-                <svg
-                  className="icon svg-icon"
-                  style={style.abilityItemIconSvg}
-                  aria-hidden="true"
-                >
-                  <use href="#icon-eye" />
-                </svg>
-                <span>27</span>
+        {detail.id && (
+          <div style={style.pad}>
+            <div style={style.feature}>
+              <div>{detail.create_time}</div>
+              <div style={style.ability}>
+                <div style={style.abilityItem}>
+                  <svg
+                    className="icon svg-icon"
+                    style={style.abilityItemIconSvg}
+                    aria-hidden="true"
+                  >
+                    <use href="#icon-xihuanhui" />
+                  </svg>
+                  <span>{detail.favor_nums}</span>
+                </div>
+                <div style={style.abilityItem}>
+                  <svg
+                    className="icon svg-icon"
+                    style={style.abilityItemIconSvg}
+                    aria-hidden="true"
+                  >
+                    <use href="#icon-eye" />
+                  </svg>
+                  <span>{detail.look_nums}</span>
+                </div>
               </div>
             </div>
+            <div>{detail.content}</div>
           </div>
-          <div>{this.state.detail.content}</div>
-        </div>
+        )}
       </div>
     )
   }

@@ -96,17 +96,20 @@ class List extends React.Component {
               </div>
               <div style={itemStyle.feature}>
                 <div style={itemStyle.favor}>
-                  <div>
+                  <div onClick={this.props.onClickFavor.bind(this, item)}>
                     <svg
                       className="icon svg-icon"
                       style={itemStyle.abilityItemIconSvg}
                       aria-hidden="true"
                     >
-                      <use href="#icon-xihuanhui" />
-                      {/* <use href="#icon-xihuan" /> */}
+                      {item.isFavor === 1 ? (
+                        <use href="#icon-xihuan" />
+                      ) : (
+                        <use href="#icon-xihuanhui" />
+                      )}
                     </svg>
                   </div>
-                  <span>12</span>
+                  <span>{item.favor_nums}</span>
                 </div>
                 <div style={itemStyle.time}>{item.create_time}</div>
               </div>
