@@ -1,43 +1,43 @@
-import React from "react";
+import React from 'react'
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   useLocation
-} from "react-router-dom";
-import Login from "./views/login";
-import Register from "./views/register";
-import Index from "./views/index";
-import WriteDiary from "./views/write-diary";
-import DiaryDetail from "./views/diary-detail";
-import "./App.css";
+} from 'react-router-dom'
+import Login from './views/login'
+import Register from './views/register'
+import Index from './views/index'
+import WriteDiary from './views/write-diary'
+import DiaryDetail from './views/diary-detail'
+import './App.css'
 
 const routes = [
   {
-    path: "/diaryDetail/:id",
+    path: '/diaryDetail/:id',
     component: DiaryDetail
   },
   {
-    path: "/writeDiary",
+    path: '/writeDiary',
     component: WriteDiary
   },
   {
-    path: "/register",
+    path: '/register',
     component: Register
   },
   {
-    path: "/login",
+    path: '/login',
     component: Login
   },
   {
-    path: "/",
+    path: '/',
     component: Index
   },
   {
-    path: "*",
+    path: '*',
     component: NoMatch
   }
-];
+]
 
 function RouteWithSubRoutes(route) {
   return (
@@ -48,7 +48,7 @@ function RouteWithSubRoutes(route) {
         <route.component {...props} routes={route.routes} />
       )}
     />
-  );
+  )
 }
 
 class App extends React.Component {
@@ -70,7 +70,7 @@ class App extends React.Component {
           ))}
         </Switch>
       </Router>
-    );
+    )
   }
 }
 
@@ -79,12 +79,12 @@ class App extends React.Component {
 // }
 
 function NoMatch() {
-  let location = useLocation();
+  let location = useLocation()
 
   return (
     <div>
       <h3>No match for {location.pathname}</h3>
     </div>
-  );
+  )
 }
-export default App;
+export default App
