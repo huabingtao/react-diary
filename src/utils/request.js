@@ -3,7 +3,7 @@ import Qs from "qs";
 import { Toast } from "antd-mobile";
 
 const instance = axios.create({
-  baseURL: "http://139.196.94.6:3000/",
+  baseURL: "http://apidiary.huabingtao.com/",
   timeout: 5000
 });
 
