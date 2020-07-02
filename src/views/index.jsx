@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import RList from "../components/List";
 import AddButton from "../components/AddButton";
 import NoData from "../components/NoData";
+import RTabs from "../components/Tsbs";
 import "../styles/register.css";
 
 class Index extends React.Component {
@@ -15,7 +16,7 @@ class Index extends React.Component {
       myDiarys: [],
       visible: true,
       selected: "",
-      tabIndex: 0
+      tabIndex: 0,
     };
   }
   componentDidMount() {
@@ -29,7 +30,7 @@ class Index extends React.Component {
     const user = JSON.parse(window.localStorage.getItem("user"));
     if (!user) {
       this.setState({
-        refreshing: false
+        refreshing: false,
       });
       return;
     }
@@ -37,12 +38,13 @@ class Index extends React.Component {
       params: {
         id: user.id,
         start: 0,
-        count: 10
-      }
+        count: 10,
+      },
     });
+
     this.setState({
       myDiarys: res.data,
-      refreshing: false
+      refreshing: false,
     });
   }
   onClickDiary(item) {
@@ -50,8 +52,9 @@ class Index extends React.Component {
   }
   onClickFavor(item, e) {
     e.stopPropagation();
-    const { id, uid } = item;
-    this._favor(id, uid);
+    const user = JSON.parse(window.localStorage.getItem("user"));
+    const { id } = item;
+    this._favor(id, user.id);
   }
   onTabClick(tab, index) {
     if (!this.isDidMyDiary && index === 1) {
@@ -59,7 +62,7 @@ class Index extends React.Component {
       this.isDidMyDiary = true;
     }
     this.setState({
-      tabIndex: index
+      tabIndex: index,
     });
   }
   onTabRight() {
@@ -71,18 +74,18 @@ class Index extends React.Component {
   async _favor(diary_id, uid) {
     await axios.post("/favor/", {
       diary_id,
-      uid
+      uid,
     });
     const { allDiarys, myDiarys, tabIndex } = this.state;
     if (tabIndex === 0) {
-      allDiarys.map(diary => {
+      allDiarys.forEach((diary) => {
         if (diary.id === diary_id) {
           diary.isFavor = 1;
           diary.favor_nums = diary.favor_nums + 1;
         }
       });
     } else {
-      myDiarys.map(diary => {
+      myDiarys.forEach((diary) => {
         if (diary.id === diary_id) {
           diary.isFavor = 1;
           diary.favor_nums = diary.favor_nums + 1;
@@ -91,44 +94,46 @@ class Index extends React.Component {
     }
     this.setState({
       allDiarys,
-      myDiarys
+      myDiarys,
     });
   }
   async _getAllDiarys() {
     const user = JSON.parse(window.localStorage.getItem("user"));
+
     const res = await axios.get("diary", {
       params: {
-        uid: user.id
-      }
+        uid: user.id,
+      },
     });
     this.setState({
       allDiarys: res.data,
-      refreshing: false
+      refreshing: false,
     });
   }
   render() {
     const style = {
       tabBox: {
-        marginTop: "1rem"
+        marginTop: "1rem",
       },
       addButton: {
         position: "fixed",
         bottom: "5rem",
         right: "2rem",
-        opacity: "0.8"
-      }
+        opacity: "0.8",
+      },
     };
     const tabs = [
       { title: "广场", sub: "1" },
-      { title: "我的", sub: "2" }
+      { title: "我的", sub: "2" },
     ];
     return (
       <div className="index-container">
         <Header onTabRight={this.onTabRight.bind(this)}></Header>
-        <Tabs
+
+        {/* <Tabs
           tabs={tabs}
           onTabClick={this.onTabClick.bind(this)}
-          renderTab={tab => <span>{tab.title}</span>}
+          renderTab={(tab) => <span>{tab.title}</span>}
         >
           <PullToRefresh
             damping={60}
@@ -173,7 +178,13 @@ class Index extends React.Component {
               )}
             </div>
           </PullToRefresh>
-        </Tabs>
+        </Tabs> */}
+        <RTabs></RTabs>
+        <RList
+          list={this.state.myDiarys}
+          onClickDiary={this.onClickDiary.bind(this)}
+          onClickFavor={this.onClickFavor.bind(this)}
+        ></RList>
         <div style={style.addButton}>
           <AddButton onClickButton={this.onClickButton.bind(this)}></AddButton>
         </div>
