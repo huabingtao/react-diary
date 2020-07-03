@@ -1,11 +1,11 @@
-import React from "react";
-import axios from "../utils/request";
-import Header from "../components/Header";
-import AddButton from "../components/AddButton";
+import React from 'react';
+import axios from '../utils/request';
+import Header from '../components/Header';
+import AddButton from '../components/AddButton';
 // import NoData from "../components/NoData";
-import RTabs from "../components/Tsbs";
-import Loading from "../components/Loading";
-import "../styles/register.css";
+import RTabs from '../components/Tsbs';
+import Loading from '../components/Loading';
+import '../styles/register.css';
 
 class Index extends React.Component {
   constructor() {
@@ -14,7 +14,7 @@ class Index extends React.Component {
       allDiarys: [],
       myDiarys: [],
       visible: true,
-      selected: "",
+      selected: '',
       tabIndex: 0,
       showLoading: 0,
     };
@@ -27,21 +27,24 @@ class Index extends React.Component {
     });
   }
   onClickButton() {
-    this.props.history.push("/writeDiary");
+    this.props.history.push('/writeDiary');
   }
 
   async _getMyDiarys() {
     this.setState({
       showLoading: 1,
     });
-    const user = JSON.parse(window.localStorage.getItem("user"));
+    const user = JSON.parse(window.localStorage.getItem('user'));
     if (!user) {
       this.setState({
+        showLoading: 0,
         refreshing: false,
       });
+      this.props.history.push('/login');
       return;
     }
-    const res = await axios.get("diary/myDiary", {
+
+    const res = await axios.get('diary/myDiary', {
       params: {
         id: user.id,
         start: 0,
@@ -62,7 +65,7 @@ class Index extends React.Component {
   }
   onClickFavor(item, e) {
     e.stopPropagation();
-    const user = JSON.parse(window.localStorage.getItem("user"));
+    const user = JSON.parse(window.localStorage.getItem('user'));
     const { id } = item;
     this._favor(id, user.id);
   }
@@ -77,8 +80,8 @@ class Index extends React.Component {
   }
   onTabRight() {
     const storage = window.localStorage;
-    storage.removeItem("user");
-    this.props.history.push("/login");
+    storage.removeItem('user');
+    this.props.history.push('/login');
   }
   onTabRefresh(index) {
     this.setState({ refreshing: true });
@@ -90,7 +93,7 @@ class Index extends React.Component {
   }
 
   async _favor(diary_id, uid) {
-    await axios.post("/favor/", {
+    await axios.post('/favor/', {
       diary_id,
       uid,
     });
@@ -119,8 +122,16 @@ class Index extends React.Component {
     this.setState({
       showLoading: 1,
     });
-    const user = JSON.parse(window.localStorage.getItem("user"));
-    const res = await axios.get("diary", {
+    const user = JSON.parse(window.localStorage.getItem('user'));
+    if (!user) {
+      this.setState({
+        showLoading: 0,
+        refreshing: false,
+      });
+      this.props.history.push('/login');
+      return;
+    }
+    const res = await axios.get('diary', {
       params: {
         uid: user.id,
       },
@@ -134,29 +145,29 @@ class Index extends React.Component {
   render() {
     const style = {
       tabBox: {
-        marginTop: "1rem",
+        marginTop: '1rem',
       },
       addButton: {
-        position: "fixed",
-        bottom: "5rem",
-        right: "2rem",
-        opacity: "0.8",
+        position: 'fixed',
+        bottom: '5rem',
+        right: '2rem',
+        opacity: '0.8',
       },
       mainContent: {
-        width: "100%",
-        height: "auto",
-        boxSizing: "border-box",
+        width: '100%',
+        height: 'auto',
+        boxSizing: 'border-box',
       },
       loadingWrap: {
-        position: "fixed",
-        top: "0",
-        right: "0",
-        bottom: "0",
-        left: "0",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        zIndex: "1",
+        position: 'fixed',
+        top: '0',
+        right: '0',
+        bottom: '0',
+        left: '0',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: '1',
       },
     };
     return (
@@ -166,7 +177,7 @@ class Index extends React.Component {
             <Loading></Loading>
           </div>
         ) : (
-          ""
+          ''
         )}
         <div className="head-contaner">
           <Header onTabRight={this.onTabRight.bind(this)}></Header>
