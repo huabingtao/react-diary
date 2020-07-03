@@ -1,35 +1,35 @@
-import React from 'react'
-import axios from '../utils/request'
-import { List, InputItem, Button, Toast } from 'antd-mobile'
-import { Link } from 'react-router-dom'
-import '../styles/register.css'
+import React from 'react';
+import axios from '../utils/request';
+import { List, InputItem, Button, Toast } from 'antd-mobile';
+import { Link } from 'react-router-dom';
+import '../styles/register.css';
 
 class Login extends React.Component {
   constructor() {
-    super()
-    this.state = {}
+    super();
+    this.state = {};
   }
   async onLogin() {
-    const { email, password } = this.state
+    const { email, password } = this.state;
     const res = await axios.post('user/login', {
       email,
-      password
-    })
-    const storage = window.localStorage
-    storage.setItem('user', JSON.stringify(res.data.user))
-    Toast.success('登录成功', 1.5, _ => {
-      this.props.history.push('/index')
-    })
+      password,
+    });
+    const storage = window.localStorage;
+    storage.setItem('user', JSON.stringify(res.data.user));
+    Toast.success('登录成功', 1.5, (_) => {
+      this.props.history.push('/index');
+    });
   }
   onChangeEmail(email) {
     this.setState({
-      email
-    })
+      email,
+    });
   }
   onChangePassword(password) {
     this.setState({
-      password
-    })
+      password,
+    });
   }
   render() {
     return (
@@ -45,6 +45,7 @@ class Login extends React.Component {
             <InputItem
               type="text"
               clear={true}
+              autofocus="autofocus"
               placeholder="input your email"
               onChange={this.onChangeEmail.bind(this)}
             >
@@ -74,8 +75,8 @@ class Login extends React.Component {
           </Link>
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default Login
+export default Login;

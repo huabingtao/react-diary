@@ -1,10 +1,10 @@
 import React from "react";
-import { Tabs, PullToRefresh } from "antd-mobile";
 import axios from "../utils/request";
 import Header from "../components/Header";
-import RList from "../components/List";
 import AddButton from "../components/AddButton";
-import NoData from "../components/NoData";
+// import NoData from "../components/NoData";
+import RTabs from "../components/Tsbs";
+import Loading from "../components/Loading";
 import "../styles/register.css";
 
 class Index extends React.Component {
@@ -15,21 +15,29 @@ class Index extends React.Component {
       myDiarys: [],
       visible: true,
       selected: "",
-      tabIndex: 0
+      tabIndex: 0,
+      showLoading: 0,
     };
   }
   componentDidMount() {
     this._getAllDiarys();
+    // 顶部的标题和tab高度为90px
+    this.setState({
+      tabHeight: document.body.clientHeight - 90,
+    });
   }
   onClickButton() {
     this.props.history.push("/writeDiary");
   }
 
   async _getMyDiarys() {
+    this.setState({
+      showLoading: 1,
+    });
     const user = JSON.parse(window.localStorage.getItem("user"));
     if (!user) {
       this.setState({
-        refreshing: false
+        refreshing: false,
       });
       return;
     }
@@ -37,12 +45,16 @@ class Index extends React.Component {
       params: {
         id: user.id,
         start: 0,
-        count: 10
-      }
+        count: 10,
+      },
     });
     this.setState({
+      showLoading: 0,
+    });
+
+    this.setState({
       myDiarys: res.data,
-      refreshing: false
+      refreshing: false,
     });
   }
   onClickDiary(item) {
@@ -50,16 +62,17 @@ class Index extends React.Component {
   }
   onClickFavor(item, e) {
     e.stopPropagation();
-    const { id, uid } = item;
-    this._favor(id, uid);
+    const user = JSON.parse(window.localStorage.getItem("user"));
+    const { id } = item;
+    this._favor(id, user.id);
   }
-  onTabClick(tab, index) {
+  onTabClick(index) {
     if (!this.isDidMyDiary && index === 1) {
       this._getMyDiarys();
       this.isDidMyDiary = true;
     }
     this.setState({
-      tabIndex: index
+      tabIndex: index,
     });
   }
   onTabRight() {
@@ -67,22 +80,30 @@ class Index extends React.Component {
     storage.removeItem("user");
     this.props.history.push("/login");
   }
+  onTabRefresh(index) {
+    this.setState({ refreshing: true });
+    if (index === 0) {
+      this._getAllDiarys();
+    } else {
+      this._getMyDiarys();
+    }
+  }
 
   async _favor(diary_id, uid) {
     await axios.post("/favor/", {
       diary_id,
-      uid
+      uid,
     });
     const { allDiarys, myDiarys, tabIndex } = this.state;
     if (tabIndex === 0) {
-      allDiarys.map(diary => {
+      allDiarys.forEach((diary) => {
         if (diary.id === diary_id) {
           diary.isFavor = 1;
           diary.favor_nums = diary.favor_nums + 1;
         }
       });
     } else {
-      myDiarys.map(diary => {
+      myDiarys.forEach((diary) => {
         if (diary.id === diary_id) {
           diary.isFavor = 1;
           diary.favor_nums = diary.favor_nums + 1;
@@ -91,89 +112,79 @@ class Index extends React.Component {
     }
     this.setState({
       allDiarys,
-      myDiarys
+      myDiarys,
     });
   }
   async _getAllDiarys() {
+    this.setState({
+      showLoading: 1,
+    });
     const user = JSON.parse(window.localStorage.getItem("user"));
     const res = await axios.get("diary", {
       params: {
-        uid: user.id
-      }
+        uid: user.id,
+      },
     });
     this.setState({
       allDiarys: res.data,
-      refreshing: false
+      refreshing: false,
+      showLoading: 0,
     });
   }
   render() {
     const style = {
       tabBox: {
-        marginTop: "1rem"
+        marginTop: "1rem",
       },
       addButton: {
         position: "fixed",
         bottom: "5rem",
         right: "2rem",
-        opacity: "0.8"
-      }
+        opacity: "0.8",
+      },
+      mainContent: {
+        width: "100%",
+        height: "auto",
+        boxSizing: "border-box",
+      },
+      loadingWrap: {
+        position: "fixed",
+        top: "0",
+        right: "0",
+        bottom: "0",
+        left: "0",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        zIndex: "1",
+      },
     };
-    const tabs = [
-      { title: "广场", sub: "1" },
-      { title: "我的", sub: "2" }
-    ];
     return (
       <div className="index-container">
-        <Header onTabRight={this.onTabRight.bind(this)}></Header>
-        <Tabs
-          tabs={tabs}
-          onTabClick={this.onTabClick.bind(this)}
-          renderTab={tab => <span>{tab.title}</span>}
-        >
-          <PullToRefresh
-            damping={60}
-            direction="down"
-            refreshing={this.state.refreshing}
-            onRefresh={() => {
-              this.setState({ refreshing: true });
-              this._getAllDiarys();
+        {this.state.showLoading ? (
+          <div className="loading-wrap" style={style.loadingWrap}>
+            <Loading></Loading>
+          </div>
+        ) : (
+          ""
+        )}
+        <div className="head-contaner">
+          <Header onTabRight={this.onTabRight.bind(this)}></Header>
+        </div>
+        <div className="main-content" style={style.mainContent}>
+          <RTabs
+            onTabRefresh={this.onTabRefresh.bind(this)}
+            onTabClick={this.onTabClick.bind(this)}
+            onClickDiary={this.onClickDiary.bind(this)}
+            onClickFavor={this.onClickFavor.bind(this)}
+            data={{
+              allDiarys: this.state.allDiarys,
+              myDiarys: this.state.myDiarys,
             }}
-          >
-            <div style={style.tabBox}>
-              {this.state.allDiarys.length !== 0 ? (
-                <RList
-                  list={this.state.allDiarys}
-                  onClickDiary={this.onClickDiary.bind(this)}
-                  onClickFavor={this.onClickFavor.bind(this)}
-                ></RList>
-              ) : (
-                <NoData></NoData>
-              )}
-            </div>
-          </PullToRefresh>
-
-          <PullToRefresh
-            damping={60}
-            direction="down"
             refreshing={this.state.refreshing}
-            onRefresh={() => {
-              this.setState({ refreshing: true });
-              this._getMyDiarys();
-            }}
-          >
-            <div style={style.tabBox}>
-              {this.state.myDiarys.length !== 0 ? (
-                <RList
-                  list={this.state.myDiarys}
-                  onClickDiary={this.onClickDiary.bind(this)}
-                  onClickFavor={this.onClickFavor.bind(this)}
-                ></RList>
-              ) : (
-                <NoData></NoData>
-              )}
-            </div>
-          </PullToRefresh>
-        </Tabs>
+            tabHeight={this.state.tabHeight}
+          ></RTabs>
+        </div>
         <div style={style.addButton}>
           <AddButton onClickButton={this.onClickButton.bind(this)}></AddButton>
         </div>

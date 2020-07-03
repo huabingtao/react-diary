@@ -1,65 +1,65 @@
-import React from 'react'
-import { Popover, NavBar, Icon } from 'antd-mobile'
-const outPng = require('../images/out.png')
-const Item = Popover.Item
-const myImg = src => (
+import React from "react";
+import { Popover, NavBar, Icon } from "antd-mobile";
+const outPng = require("../images/out.png");
+const Item = Popover.Item;
+const myImg = (src) => (
   <img src={`${outPng}`} alt="" className="am-icon am-icon-xs" />
-)
+);
 class Header extends React.Component {
   state = {
     visible: false,
-    selected: ''
-  }
-  onSelect = opt => {
-    console.log(opt.props.value)
+    selected: "",
+  };
+  onSelect = (opt) => {
+    console.log(opt.props.value);
     this.setState({
       visible: false,
-      selected: opt.props.value
-    })
-    if (opt.props.value === 'goOut') {
-      this.props.onTabRight()
+      selected: opt.props.value,
+    });
+    if (opt.props.value === "goOut") {
+      this.props.onTabRight();
     }
-  }
-  handleVisibleChange = visible => {
+  };
+  handleVisibleChange = (visible) => {
     this.setState({
-      visible
-    })
-  }
+      visible,
+    });
+  };
   render() {
     return (
       <div>
         <NavBar
-          style={{ backgroundColor: '#56b783' }}
+          style={{ backgroundColor: "#56b783" }}
           rightContent={
             <Popover
               mask
               overlayClassName="fortest"
-              overlayStyle={{ color: 'currentColor' }}
+              overlayStyle={{ color: "currentColor" }}
               visible={this.state.visible}
               overlay={[
                 <Item
                   key="4"
                   value="goOut"
-                  icon={myImg('tOtXhkIWzwotgGSeptou')}
+                  icon={myImg("tOtXhkIWzwotgGSeptou")}
                   data-seed="logId"
                 >
                   退出
-                </Item>
+                </Item>,
               ]}
               align={{
                 overflow: { adjustY: 0, adjustX: 0 },
-                offset: [-10, 0]
+                offset: [-10, 0],
               }}
               onVisibleChange={this.handleVisibleChange}
               onSelect={this.onSelect}
             >
               <div
                 style={{
-                  height: '100%',
-                  padding: '0 15px',
-                  marginRight: '-15px',
-                  display: 'flex',
-                  alignItems: 'center'
+                  height: "100%",
+                  padding: "0 15px",
+                  marginRight: "-15px",
+                  display: "flex",
+                  alignItems: "center",
                 }}
               >
                 <Icon type="ellipsis" />
@@ -70,8 +70,8 @@ class Header extends React.Component {
           吾记
         </NavBar>
       </div>
-    )
+    );
   }
 }
 
-export default Header
+export default Header;
