@@ -1,5 +1,7 @@
 import React from "react";
-// import { Tabs, PullToRefresh } from "antd-mobile";
+import { PullToRefresh } from "antd-mobile";
+import RList from "./List";
+// import NoData from "./NoData";
 import "../styles/common.css";
 class Tabs extends React.Component {
   constructor() {
@@ -16,12 +18,20 @@ class Tabs extends React.Component {
       tabIndex: 0,
     };
   }
+  componentDidMount() {
+    console.log(this.props.data);
+  }
   handleTab(tabIndex) {
-    console.log(tabIndex);
-
     this.setState({
       tabIndex: tabIndex,
     });
+    this.props.onTabClick(tabIndex);
+  }
+  onClickDiary(item) {
+    this.props.onClickDiary(item);
+  }
+  onClickFavor(item, e) {
+    this.props.onClickFavor(item, e);
   }
   render() {
     const style = {
@@ -31,8 +41,6 @@ class Tabs extends React.Component {
         height: "44px",
         display: "flex",
         backgroundColor: "#fff",
-        position: "sticky",
-        top: "0px",
       },
       tabSelf: {
         flex: 1,
@@ -44,7 +52,14 @@ class Tabs extends React.Component {
       tabSelfAactive: {
         color: "#108ee9",
       },
-      tabPanel: {},
+      tabPanel: {
+        height: "100%",
+        boxSizing: "border-box",
+        padding: "90px 0 0 0",
+      },
+      tabBox: {
+        marginTop: "1rem",
+      },
     };
     return (
       <div className="tabs-container">
@@ -68,102 +83,44 @@ class Tabs extends React.Component {
               </div>
             );
           })}
-          {/* <div className={"tab-self" } style={style.tabSelf}>
-            <span>广场</span>
-            <span className="bottom-line"></span>
-          </div>
-          <div className="tab-self" style={style.tabSelf}>
-            <span>我的</span>
-          </div> */}
         </div>
         <div className="tab-panel">
-          <div className="tab-content">
-            内容
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            1111
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            内容
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            1111
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            内容
-          </div>
+          <PullToRefresh
+            damping={60}
+            direction="down"
+            refreshing={this.props.refreshing}
+            style={{
+              height: this.props.tabHeight,
+              overflow: "auto",
+            }}
+            onRefresh={() => {
+              this.props.onTabRefresh(this.state.tabIndex);
+            }}
+          >
+            <div className="tab-content">
+              {this.state.tabIndex === 0 ? (
+                <div style={style.tabBox}>
+                  <RList
+                    list={this.props.data.allDiarys}
+                    onClickDiary={this.onClickDiary.bind(this)}
+                    onClickFavor={this.onClickFavor.bind(this)}
+                  ></RList>
+                </div>
+              ) : (
+                <div style={style.tabBox}>
+                  {this.props.data.myDiarys.length ? (
+                    <RList
+                      list={this.props.data.myDiarys}
+                      onClickDiary={this.onClickDiary.bind(this)}
+                      onClickFavor={this.onClickFavor.bind(this)}
+                    ></RList>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              )}
+            </div>
+          </PullToRefresh>
         </div>
       </div>
     );
