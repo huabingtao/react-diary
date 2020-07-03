@@ -1,43 +1,43 @@
-import React from 'react'
-import axios from '../utils/request'
-import { List, InputItem, Button, Toast } from 'antd-mobile'
-import { Link } from 'react-router-dom'
-import '../styles/register.css'
+import React from 'react';
+import axios from '../utils/request';
+import { List, InputItem, Button, Toast } from 'antd-mobile';
+import { Link } from 'react-router-dom';
+import '../styles/register.css';
 
 class Register extends React.Component {
   constructor() {
-    super()
-    this.state = {}
+    super();
+    this.state = {};
   }
   async onRegister() {
-    const { email, nickname, password1, password2 } = this.state
+    const { email, nickname, password1, password2 } = this.state;
     await axios.post('user/register', {
       email,
       nickname,
       password1,
-      password2
-    })
-    Toast.success('Register Success', 2)
+      password2,
+    });
+    Toast.success('Register Success', 2);
   }
   onChangeEamil(email) {
     this.setState({
-      email
-    })
+      email,
+    });
   }
   onChangeNickname(nickname) {
     this.setState({
-      nickname
-    })
+      nickname,
+    });
   }
   onChangePassword1(password1) {
     this.setState({
-      password1
-    })
+      password1,
+    });
   }
   onChangePassword2(password2) {
     this.setState({
-      password2
-    })
+      password2,
+    });
   }
   render() {
     return (
@@ -51,6 +51,7 @@ class Register extends React.Component {
         <div className="input">
           <List>
             <InputItem
+              autofocus="autofocus"
               type="text"
               placeholder="input your email"
               clear={true}
@@ -97,8 +98,8 @@ class Register extends React.Component {
           </Link>
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default Register
+export default Register;
