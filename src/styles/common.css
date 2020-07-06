@@ -1,5 +1,5 @@
 .tab-self::after {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   bottom: 0;
@@ -28,9 +28,19 @@
   justify-content: space-around;
   align-items: center;
   position: relative;
-  z-index: 2000;
+  z-index: -1;
+  pointer-events: none;
 }
-
+.loading-wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: 'flex';
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
 .loading-container > span {
   width: 8px;
   height: 40px;
