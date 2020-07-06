@@ -98,7 +98,6 @@ class Tabs extends React.Component {
             <div
               className="tab-content"
               style={{
-                minHeight: this.props.tabHeight,
                 overflow: 'auto',
               }}
             >
