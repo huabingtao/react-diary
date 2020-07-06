@@ -9,6 +9,9 @@
   transform-origin: 50% 100%;
   transform: scaleY(0.5);
 }
+.am-list-item {
+  padding: 15px;
+}
 .tab-self.active {
   color: #108ee9;
 }

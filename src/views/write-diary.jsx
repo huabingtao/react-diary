@@ -1,6 +1,6 @@
-import React from 'react'
-import axios from '../utils/request'
-import { TextareaItem, Toast } from 'antd-mobile'
+import React from 'react';
+import axios from '../utils/request';
+import { TextareaItem, Toast } from 'antd-mobile';
 
 function Header(props) {
   const style = {
@@ -12,12 +12,12 @@ function Header(props) {
       justifyContent: 'space-between',
       alignItems: 'center',
       padding: '0 1rem',
-      background: '#53a6db'
+      background: '#53a6db',
     },
     cancel: {
-      color: '#0e80d2'
-    }
-  }
+      color: '#0e80d2',
+    },
+  };
 
   return (
     <div style={style.wrap}>
@@ -26,57 +26,57 @@ function Header(props) {
       </span>
       <span onClick={props.onClickConfirm}>发布</span>
     </div>
-  )
+  );
 }
 class WriteDiary extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      content: ''
-    }
+      content: '',
+    };
   }
   componentDidMount() {
-    this.autoFocusInst.focus()
+    this.autoFocusInst.focus();
     if (!this.props.location.state) {
-      return
+      return;
     }
-    const { content, uid, id } = this.props.location.state.diaryDetail
+    const { content, uid, id } = this.props.location.state.diaryDetail;
     this.setState({
       uid,
       id,
-      content
-    })
+      content,
+    });
   }
 
   async onClickConfirm() {
-    const { content, id, uid } = this.state
-    const user = JSON.parse(window.localStorage.getItem('user'))
+    const { content, id, uid } = this.state;
+    const user = JSON.parse(window.localStorage.getItem('user'));
     if (id) {
       await axios.put('/diary/', {
         uid,
         id,
-        content
-      })
-      Toast.success('编辑成功', 1.5, _ => {
-        this.props.history.goBack()
-      })
+        content,
+      });
+      Toast.success('编辑成功', 1.5, (_) => {
+        this.props.history.goBack();
+      });
     } else {
       await axios.post('/diary/', {
         id: user.id,
-        content
-      })
-      Toast.success('发布成功', 1.5, _ => {
-        this.props.history.goBack()
-      })
+        content,
+      });
+      Toast.success('发布成功', 1.5, (_) => {
+        this.props.history.goBack();
+      });
     }
   }
   onChange(value) {
     this.setState({
-      content: value
-    })
+      content: value,
+    });
   }
   onClickCancel() {
-    this.props.history.goBack()
+    this.props.history.goBack();
   }
 
   render() {
@@ -90,14 +90,14 @@ class WriteDiary extends React.Component {
           rows="16"
           value={this.state.content}
           placeholder="从前车马很慢书信很远一生只够爱一个人"
-          ref={el => (this.autoFocusInst = el)}
-          count="2000"
+          ref={(el) => (this.autoFocusInst = el)}
+          count="1000"
+          style={{ minHeight: '300px', lineHeight: '18px' }}
           onChange={this.onChange.bind(this)}
-          autoHeight
         />
       </div>
-    )
+    );
   }
 }
 
-export default WriteDiary
+export default WriteDiary;
