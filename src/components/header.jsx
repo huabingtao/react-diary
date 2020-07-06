@@ -1,6 +1,6 @@
-import React from "react";
-import { Popover, NavBar, Icon } from "antd-mobile";
-const outPng = require("../images/out.png");
+import React from 'react';
+import { Popover, NavBar, Icon } from 'antd-mobile';
+const outPng = require('../images/out.png');
 const Item = Popover.Item;
 const myImg = (src) => (
   <img src={`${outPng}`} alt="" className="am-icon am-icon-xs" />
@@ -8,15 +8,14 @@ const myImg = (src) => (
 class Header extends React.Component {
   state = {
     visible: false,
-    selected: "",
+    selected: '',
   };
   onSelect = (opt) => {
-    console.log(opt.props.value);
     this.setState({
       visible: false,
       selected: opt.props.value,
     });
-    if (opt.props.value === "goOut") {
+    if (opt.props.value === 'goOut') {
       this.props.onTabRight();
     }
   };
@@ -29,18 +28,18 @@ class Header extends React.Component {
     return (
       <div>
         <NavBar
-          style={{ backgroundColor: "#56b783" }}
+          style={{ backgroundColor: '#56b783' }}
           rightContent={
             <Popover
               mask
               overlayClassName="fortest"
-              overlayStyle={{ color: "currentColor" }}
+              overlayStyle={{ color: 'currentColor' }}
               visible={this.state.visible}
               overlay={[
                 <Item
                   key="4"
                   value="goOut"
-                  icon={myImg("tOtXhkIWzwotgGSeptou")}
+                  icon={myImg('tOtXhkIWzwotgGSeptou')}
                   data-seed="logId"
                 >
                   退出
@@ -55,11 +54,11 @@ class Header extends React.Component {
             >
               <div
                 style={{
-                  height: "100%",
-                  padding: "0 15px",
-                  marginRight: "-15px",
-                  display: "flex",
-                  alignItems: "center",
+                  height: '100%',
+                  padding: '0 15px',
+                  marginRight: '-15px',
+                  display: 'flex',
+                  alignItems: 'center',
                 }}
               >
                 <Icon type="ellipsis" />

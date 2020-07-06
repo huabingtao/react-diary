@@ -158,20 +158,9 @@ class Index extends React.Component {
         height: 'auto',
         boxSizing: 'border-box',
       },
-      loadingWrap: {
-        position: 'fixed',
-        top: '0',
-        right: '0',
-        bottom: '0',
-        left: '0',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        zIndex: '1',
-      },
     };
     return (
-      <div className="index-container">
+      <div className="index-container" style={{ position: 'relative' }}>
         {this.state.showLoading ? (
           <div className="loading-wrap" style={style.loadingWrap}>
             <Loading></Loading>
@@ -179,6 +168,7 @@ class Index extends React.Component {
         ) : (
           ''
         )}
+
         <div className="head-contaner">
           <Header onTabRight={this.onTabRight.bind(this)}></Header>
         </div>

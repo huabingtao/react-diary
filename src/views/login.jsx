@@ -2,22 +2,39 @@ import React from 'react';
 import axios from '../utils/request';
 import { List, InputItem, Button, Toast } from 'antd-mobile';
 import { Link } from 'react-router-dom';
+import Loading from '../components/Loading';
 import '../styles/register.css';
 
 class Login extends React.Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      showLoading: 0,
+    };
   }
   async onLogin() {
-    const { email, password } = this.state;
-    const res = await axios.post('user/login', {
-      email,
-      password,
+    this.setState({
+      showLoading: 1,
     });
+    const { email, password } = this.state;
+    let res = null;
+    try {
+      res = await axios.post('user/login', {
+        email,
+        password,
+      });
+    } catch (error) {
+      this.setState({
+        showLoading: 0,
+      });
+      return;
+    }
     const storage = window.localStorage;
     storage.setItem('user', JSON.stringify(res.data.user));
     Toast.success('登录成功', 1.5, (_) => {
+      this.setState({
+        showLoading: 0,
+      });
       this.props.history.push('/index');
     });
   }
@@ -34,6 +51,13 @@ class Login extends React.Component {
   render() {
     return (
       <div className="login-container">
+        {this.state.showLoading ? (
+          <div className="loading-wrap">
+            <Loading></Loading>
+          </div>
+        ) : (
+          ''
+        )}
         <div className="logo">
           <svg className="icon svg-icon" aria-hidden="true">
             <use href="#icon-bianjilan" />
