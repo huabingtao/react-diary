@@ -1,7 +1,7 @@
 import React from 'react';
 import { PullToRefresh } from 'antd-mobile';
 import RList from './List';
-import NoData from './NoData';
+// import NoData from "./NoData";
 import '../styles/common.css';
 class Tabs extends React.Component {
   constructor() {
@@ -95,12 +95,7 @@ class Tabs extends React.Component {
               this.props.onTabRefresh(this.state.tabIndex);
             }}
           >
-            <div
-              className="tab-content"
-              style={{
-                overflow: 'auto',
-              }}
-            >
+            <div className="tab-content">
               {this.state.tabIndex === 0 ? (
                 <div style={style.tabBox}>
                   <RList
@@ -118,7 +113,7 @@ class Tabs extends React.Component {
                       onClickFavor={this.onClickFavor.bind(this)}
                     ></RList>
                   ) : (
-                    <NoData></NoData>
+                    ''
                   )}
                 </div>
               )}
