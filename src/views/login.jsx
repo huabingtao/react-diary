@@ -10,6 +10,8 @@ class Login extends React.Component {
     super();
     this.state = {
       showLoading: 0,
+      email: '127@qq.com',
+      password: '111111',
     };
   }
   async onLogin() {
@@ -69,7 +71,7 @@ class Login extends React.Component {
             <InputItem
               type="text"
               clear={true}
-              autofocus="autofocus"
+              defaultValue={this.state.email}
               placeholder="input your email"
               onChange={this.onChangeEmail.bind(this)}
             >
@@ -79,6 +81,7 @@ class Login extends React.Component {
               clear={true}
               type="password"
               placeholder="****"
+              defaultValue={this.state.password}
               onChange={this.onChangePassword.bind(this)}
             >
               密码

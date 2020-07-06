@@ -5,6 +5,10 @@ import axios from '../utils/request';
 const alert = Modal.alert;
 
 function Header(props) {
+  const storage = window.localStorage;
+  const { uid } = props;
+  const { id } = JSON.parse(storage.getItem('user'));
+  const permission = uid === id ? true : false;
   const style = {
     wrap: {
       display: 'flex',
@@ -28,23 +32,34 @@ function Header(props) {
       height: '2rem',
       padding: '0.2rem',
       color: '#fff',
+      opacity: '0.8',
     },
   };
   return (
     <div style={style.wrap}>
       <span onClick={props.onClickGoback}>返回</span>
-      <div style={style.feature}>
-        <div onClick={props.onClickDelete}>
-          <svg className="icon svg-icon" style={style.icon} aria-hidden="true">
-            <use href="#icon-shanchu" />
-          </svg>
+      {permission && (
+        <div style={style.feature}>
+          <div onClick={props.onClickDelete}>
+            <svg
+              className="icon svg-icon"
+              style={style.icon}
+              aria-hidden="true"
+            >
+              <use href="#icon-shanchu" />
+            </svg>
+          </div>
+          <div onClick={props.onClickModify}>
+            <svg
+              className="icon svg-icon"
+              style={style.icon}
+              aria-hidden="true"
+            >
+              <use href="#icon-bianji" />
+            </svg>
+          </div>
         </div>
-        <div onClick={props.onClickModify}>
-          <svg className="icon svg-icon" style={style.icon} aria-hidden="true">
-            <use href="#icon-bianji" />
-          </svg>
-        </div>
-      </div>
+      )}
     </div>
   );
 }
@@ -148,6 +163,7 @@ class DiaryDetail extends React.Component {
         )}
 
         <Header
+          uid={detail.uid}
           onClickGoback={this.onClickGoback.bind(this)}
           onClickDelete={this.onClickDelete.bind(this)}
           onClickModify={this.onClickModify.bind(this)}
