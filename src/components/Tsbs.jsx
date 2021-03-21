@@ -1,7 +1,7 @@
 import React from 'react';
 import { PullToRefresh } from 'antd-mobile';
 import RList from './List';
-// import NoData from "./NoData";
+import NoData from "./NoData";
 import '../styles/common.css';
 class Tabs extends React.Component {
   constructor() {
@@ -58,6 +58,12 @@ class Tabs extends React.Component {
       tabBox: {
         marginTop: '1rem',
       },
+      empty:{
+        position: 'fixed',
+        left:'50%',
+        top: '50%',
+        transform: 'translate(-50%,-50%)'
+      }
     };
     return (
       <div className="tabs-container">
@@ -82,7 +88,10 @@ class Tabs extends React.Component {
             );
           })}
         </div>
-        <div className="tab-panel">
+        <div className="tab-panel" >
+        { this.props.data.allDiarys.length === 0 ?   <div style={style.empty}><NoData></NoData> </div>: ''}
+       
+          
           <PullToRefresh
             damping={60}
             direction="down"
@@ -119,6 +128,7 @@ class Tabs extends React.Component {
               )}
             </div>
           </PullToRefresh>
+     
         </div>
       </div>
     );
