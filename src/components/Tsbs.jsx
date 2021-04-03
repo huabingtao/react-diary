@@ -127,7 +127,6 @@ class Tabs extends React.Component {
               )}
             </div>
           </PullToRefresh>
-     
         </div>
       </div>
     );
