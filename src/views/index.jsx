@@ -70,10 +70,17 @@ class Index extends React.Component {
     this._favor(id, user.id);
   }
   onTabClick(index) {
-    if (!this.isDidMyDiary && index === 1) {
+    // if (!this.isDidMyDiary && index === 1) {
+    //   this._getMyDiarys();
+    //   this.isDidMyDiary = true;
+    // }
+    // console.log(index);
+    if(index === 0){
+      this._getAllDiarys()
+    }else{
       this._getMyDiarys();
-      this.isDidMyDiary = true;
     }
+    
     this.setState({
       tabIndex: index,
     });
@@ -181,6 +188,7 @@ class Index extends React.Component {
             data={{
               allDiarys: this.state.allDiarys,
               myDiarys: this.state.myDiarys,
+              showLoading:this.state.showLoading
             }}
             refreshing={this.state.refreshing}
             tabHeight={this.state.tabHeight}

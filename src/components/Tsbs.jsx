@@ -32,6 +32,7 @@ class Tabs extends React.Component {
     this.props.onClickFavor(item, e);
   }
   render() {
+    const {allDiarys,myDiarys,showLoading} = this.props.data
     const style = {
       tabsContainer: {},
       tabList: {
@@ -89,7 +90,7 @@ class Tabs extends React.Component {
           })}
         </div>
         <div className="tab-panel" >
-        { this.props.data.allDiarys.length === 0 ?   <div style={style.empty}><NoData></NoData> </div>: ''}
+        { allDiarys.length === 0 && !showLoading ?   <div style={style.empty}><NoData></NoData> </div>: ''}
        
           
           <PullToRefresh
@@ -108,16 +109,16 @@ class Tabs extends React.Component {
               {this.state.tabIndex === 0 ? (
                 <div style={style.tabBox}>
                   <RList
-                    list={this.props.data.allDiarys}
+                    list={allDiarys}
                     onClickDiary={this.onClickDiary.bind(this)}
                     onClickFavor={this.onClickFavor.bind(this)}
                   ></RList>
                 </div>
               ) : (
                 <div style={style.tabBox}>
-                  {this.props.data.myDiarys.length ? (
+                  {myDiarys.length ? (
                     <RList
-                      list={this.props.data.myDiarys}
+                      list={myDiarys}
                       onClickDiary={this.onClickDiary.bind(this)}
                       onClickFavor={this.onClickFavor.bind(this)}
                     ></RList>
