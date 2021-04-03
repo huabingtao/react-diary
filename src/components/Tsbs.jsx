@@ -92,7 +92,6 @@ class Tabs extends React.Component {
         <div className="tab-panel" >
         { allDiarys.length === 0 && !showLoading ?   <div style={style.empty}><NoData></NoData> </div>: ''}
        
-          
           <PullToRefresh
             damping={60}
             direction="down"
