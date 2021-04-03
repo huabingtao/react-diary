@@ -33,6 +33,7 @@ class Index extends React.Component {
   async _getMyDiarys() {
     this.setState({
       showLoading: 1,
+      myDiarys:[]
     });
     const user = JSON.parse(window.localStorage.getItem('user'));
     if (!user) {
@@ -44,21 +45,25 @@ class Index extends React.Component {
       return;
     }
 
-    const res = await axios.get('diary/myDiary', {
-      params: {
-        id: user.id,
-        start: 0,
-        count: 10,
-      },
-    });
-    this.setState({
-      showLoading: 0,
-    });
-
-    this.setState({
-      myDiarys: res.data,
-      refreshing: false,
-    });
+    try {
+      const res = await axios.get('diary/myDiary', {
+        params: {
+          id: user.id,
+          start: 0,
+          count: 10,
+        },
+      });
+  
+      this.setState({
+        showLoading: 0,
+        myDiarys: res.data,
+        refreshing: false,
+      });
+    } catch (error) {
+      this.setState({
+        showLoading:0
+      })
+    }
   }
   onClickDiary(item) {
     this.props.history.push(`diaryDetail/${item.id}`);
@@ -128,6 +133,7 @@ class Index extends React.Component {
   async _getAllDiarys() {
     this.setState({
       showLoading: 1,
+      allDiarys:[]
     });
     const user = JSON.parse(window.localStorage.getItem('user'));
     if (!user) {
