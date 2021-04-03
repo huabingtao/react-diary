@@ -1,7 +1,7 @@
 import React from 'react';
 import { PullToRefresh } from 'antd-mobile';
 import RList from './List';
-// import NoData from "./NoData";
+import NoData from "./NoData";
 import '../styles/common.css';
 class Tabs extends React.Component {
   constructor() {
@@ -32,6 +32,7 @@ class Tabs extends React.Component {
     this.props.onClickFavor(item, e);
   }
   render() {
+    const {allDiarys,myDiarys,showLoading} = this.props.data
     const style = {
       tabsContainer: {},
       tabList: {
@@ -58,6 +59,12 @@ class Tabs extends React.Component {
       tabBox: {
         marginTop: '1rem',
       },
+      empty:{
+        position: 'fixed',
+        left:'50%',
+        top: '50%',
+        transform: 'translate(-50%,-50%)'
+      }
     };
     return (
       <div className="tabs-container">
@@ -82,7 +89,8 @@ class Tabs extends React.Component {
             );
           })}
         </div>
-        <div className="tab-panel">
+        <div className="tab-panel" >
+        { allDiarys.length === 0 && !showLoading ?   <div style={style.empty}><NoData></NoData> </div>: ''}
           <PullToRefresh
             damping={60}
             direction="down"
@@ -99,16 +107,16 @@ class Tabs extends React.Component {
               {this.state.tabIndex === 0 ? (
                 <div style={style.tabBox}>
                   <RList
-                    list={this.props.data.allDiarys}
+                    list={allDiarys}
                     onClickDiary={this.onClickDiary.bind(this)}
                     onClickFavor={this.onClickFavor.bind(this)}
                   ></RList>
                 </div>
               ) : (
                 <div style={style.tabBox}>
-                  {this.props.data.myDiarys.length ? (
+                  {myDiarys.length ? (
                     <RList
-                      list={this.props.data.myDiarys}
+                      list={myDiarys}
                       onClickDiary={this.onClickDiary.bind(this)}
                       onClickFavor={this.onClickFavor.bind(this)}
                     ></RList>

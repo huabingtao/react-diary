@@ -70,7 +70,7 @@ class DiaryDetail extends React.Component {
     this.state = {
       detail: '',
       id: this.props.match.params.id,
-      showLoading: 0,
+      showLoading: 0
     };
   }
   componentDidMount() {
