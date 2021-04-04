@@ -4,7 +4,7 @@
 
 ### 线上地址
 
-[预览](http://diary.huabingtao.com/login)
+PC端访问请切换为移动端模式[预览](http://diary.huabingtao.com/login)
 账号:123@qq.com
 密码:111111
 
